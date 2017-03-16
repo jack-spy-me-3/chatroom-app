@@ -1,6 +1,6 @@
 class Api::V1::MessagesController < ApplicationController
   def index
-    @messages = Message.all
+    @messages = Message.where(chatroom_id: params[:chatroom_id])
     render "index.json.jbuilder"
   end
 
@@ -10,6 +10,13 @@ class Api::V1::MessagesController < ApplicationController
       user_id: params[:user_id],
       chatroom_id: params[:chatroom_id]
     )
+
+    ActionCable.server.broadcast "activity_channel", {
+      id: @message.id,
+      name: @message.user.name,
+      body: @message.body,
+      created_at: @message.created_at
+    }
     render "show.json.jbuilder"
   end
 end

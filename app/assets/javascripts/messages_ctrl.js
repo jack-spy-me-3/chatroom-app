@@ -2,8 +2,9 @@
 
 (function() {
   angular.module("app").controller("messagesCtrl", function($scope, $http) {
-    $scope.setup = function() {
-      $http.get("/api/v1/messages.json").then(function(response) {
+    $scope.setup = function(id) {
+      // var paramsHash = {chatroom_id: id};
+      $http({method: "GET", url: "/api/v1/messages.json", params: {chatroom_id: id}}).then(function(response) {
         $scope.messages = response.data;
       });
     };
@@ -15,7 +16,6 @@
         chatroom_id: chatroomId
       };
       $http.post("/api/v1/messages.json", params).then(function(response) {
-        $scope.messages.push(response.data);
         $scope.newMessageBody = "";
       });
     };
