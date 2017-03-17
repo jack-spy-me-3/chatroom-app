@@ -15,6 +15,7 @@ class Api::V1::MessagesController < ApplicationController
       id: @message.id,
       name: @message.user.name,
       body: @message.body,
+      chatroom_id: @message.chatroom_id,
       created_at: @message.created_at
     }
     render "show.json.jbuilder"

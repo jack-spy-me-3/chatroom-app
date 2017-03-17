@@ -1,10 +1,10 @@
+<% if current_user %>
 <div ng-app="app">
-  <div id="messages" ng-controller="messagesCtrl" ng-init="setup(<%= @chatroom.id %>)">
+  <div id="messages-<%= @chatroom.id %>" ng-controller="messagesCtrl" ng-init="setup(<%= @chatroom.id %>)">
     <div class="message" ng-repeat="message in messages | orderBy:'created_at'">
       {{ message.name }}: {{ message.body }}
     </div>
 
-    <% if current_user %>
       <div>
         <label for="body">New message: </label>
         <input type="text" id="body" name="body" ng-model="newMessageBody">
